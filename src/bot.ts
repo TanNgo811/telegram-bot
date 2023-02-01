@@ -192,20 +192,20 @@ bot.on("message", async (ctx) => {
 
   if (messageContent) {
     switch (true) {
-      case /Ping|ping/.test(messageContent):
+      case (/(P|p)ing/g).test(messageContent):
         await ctx.reply("pong", {
           reply_to_message_id: ctx.msg.message_id,
         });
         break;
   
-      case /Linh|linh/.test(messageContent):
+      case (/(L|l)inh/g).test(messageContent):
         await ctx.reply("Linh nào cơ?", {
           reply_to_message_id: ctx.msg.message_id,
         });
         break;
 
-      case /(H|h)o(à|a)ng (A|a)nh/.test(messageContent):
-        const mention = `[Công Vũ](https://t.me/congvu1122)`
+      case (/((H|h)o(à|a)ng (A|a)nh)|HA|ha/g).test(messageContent):
+        const mention = `[Công Vũ]()`
         await ctx.reply(`${mention} Em ơi có người nhắc tên người ý này`, {
           reply_to_message_id: ctx.msg.message_id, 
           parse_mode: "MarkdownV2"
@@ -232,5 +232,7 @@ if (process.env.NODE_ENV === "production") {
   });
 } else {
   // Use Long Polling for development
-  bot.start();
+  bot.start().then(() => {
+    //
+  });
 }
