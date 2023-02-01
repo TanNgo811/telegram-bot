@@ -13,8 +13,6 @@ bot.command("yo", (ctx) => ctx.reply(`Chào ${ctx.from?.first_name} nhé`));
 
 bot.command("suck", (ctx) => ctx.reply(`Biết ông Sắc không`));
 
-bot.command("suck", (ctx) => ctx.reply(`Biết ông Sắc không`));
-
 // Handle the /effect command to apply text effects using an inline keyboard
 type Effect = { code: TextEffectVariant; label: string };
 const allEffects: Effect[] = [
@@ -185,9 +183,41 @@ const replyWithIntro = (ctx: any) => {
 
 
 bot.command("start", replyWithIntro);
-bot.on("message", () => {
-  //
-});
+
+bot.on("message", async (ctx) => {
+
+  const {message} = ctx;
+
+  const {text: messageContent} = message;
+
+  if (messageContent) {
+    switch (true) {
+      case /Ping|ping/.test(messageContent):
+        await ctx.reply("pong", {
+          reply_to_message_id: ctx.msg.message_id,
+        });
+        break;
+  
+      case /Linh|linh/.test(messageContent):
+        await ctx.reply("Linh nào cơ?", {
+          reply_to_message_id: ctx.msg.message_id,
+        });
+        break;
+
+      case /(H|h)o(à|a)ng (A|a)nh/.test(messageContent):
+        const mention = `[Công Vũ](https://t.me/congvu1122)`
+        await ctx.reply(`${mention} Em ơi có người nhắc tên người ý này`, {
+          reply_to_message_id: ctx.msg.message_id, 
+          parse_mode: "MarkdownV2"
+        });
+        break; 
+  
+      default:
+  
+        break;
+    }
+  }  
+})
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
